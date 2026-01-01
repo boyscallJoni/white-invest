@@ -1162,6 +1162,26 @@ body.modal-open{ overflow:hidden; }
   }
 }
 
+
+/* === Mobile tap feedback everywhere (blocks + text) === */
+@media (pointer: coarse){
+  /* tap-ready transitions */
+  .tap-anim{
+    will-change: transform, filter, box-shadow, text-shadow;
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease, text-shadow .18s ease;
+  }
+  /* generic "move" */
+  .tapfx{
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+  }
+  /* text-only feedback */
+  .tapfx-text{
+    transform: translateY(-1px);
+    text-shadow: 0 6px 18px rgba(42,124,255,.18);
+  }
+}
+
 </style>
 
   <script>
