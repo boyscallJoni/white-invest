@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>White Invest — WCT | World Crypto Invest</title>
+  <meta name="description" content="White Invest (WCT) — инвестиционная платформа с доступом к торговым алгоритмам через API. Платформа не хранит средства и не имеет доступа к выводу." />
+  <style>
+    :root{
+      --bg0:#F5F7FB;
+      --bg1:#FFFFFF;
+      --card:#FFFFFF;
+      --card2:#F3F6FA;
+      --stroke:rgba(10,15,30,.12);
+      --stroke2:rgba(10,15,30,.18);
+      --text:#0B1222;
+      --muted:rgba(11,18,34,.72);
+      --muted2:rgba(11,18,34,.55);
+      --accent:#2A7CFF;
+      --accent2:#46D6FF;
+      --good:#16A34A;
+      --warn:#D97706;
+      --shadow:0 22px 70px rgba(10,15,30,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1180px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 12% 16%, rgba(70,214,255,.14), transparent 60%),
+        radial-gradient(860px 520px at 88% 18%, rgba(42,124,255,.10), transparent 60%),
+        radial-gradient(900px 640px at 50% 100%, rgba(70,214,255,.07), transparent 65%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
+    .grid{display:grid; gap:18px}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      padding:10px 14px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:14px;
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(70,214,255,.10);
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(7,11,20,.55);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 240px;
+    }
+    .brand b{letter-spacing:.2px}
+    .brand small{display:block; color:var(--muted2); font-size:12px; margin-top:1px}
+    nav ul{list-style:none; display:flex; gap:18px; margin:0; padding:0; align-items:center}
+    nav a{
+      color:var(--muted);
+      font-size:14px;
+      padding:10px 10px;
+      border-radius:999px;
+      transition: .25s ease;
+    }
+    nav a:hover{color:var(--text); background: rgba(255,255,255,.04)}
+    .nav-cta{display:flex; gap:10px; align-items:center}
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius: 999px;
+      font-size:14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .18s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+      white-space:nowrap;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: var(--stroke2); background: rgba(255,255,255,.05)}
+    .btn:active{transform: translateY(0px)}
+    .btn-primary{
+      border-color: rgba(70,214,255,.40);
+      background: linear-gradient(180deg, rgba(70,214,255,.18), rgba(42,124,255,.10));
+      box-shadow: 0 12px 40px rgba(70,214,255,.10);
+    }
+    .btn-primary:hover{
+      border-color: rgba(70,214,255,.60);
+      box-shadow: 0 16px 55px rgba(70,214,255,.14);
+    }
+    .btn-ghost{
+      background: transparent;
+    }
+
+    /* Hero */
+    .hero{padding: 54px 0 26px}
+    .hero-inner{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .hero h1{
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height:1.05;
+      letter-spacing: -0.8px;
+    }
+    .hero p{
+      margin:0;
+      font-size: clamp(15px, 1.55vw, 18px);
+      color: var(--muted);
+      line-height:1.6;
+      max-width: 64ch;
+    }
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+    .disclaimer{margin-top:10px; color:var(--muted2); font-size:12px}
+
+    .hero-card{
+      position:relative;
+      border-radius: var(--radius2);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      padding: 18px;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 320px at 20% 20%, rgba(70,214,255,.16), transparent 62%),
+        radial-gradient(460px 340px at 88% 25%, rgba(42,124,255,.12), transparent 60%);
+      pointer-events:none;
+      filter: blur(.2px);
+    }
+    .hero-card > *{position:relative; z-index:1}
+    .metric{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+      padding: 14px 14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(8,12,22,.45);
+      backdrop-filter: blur(10px);
+    }
+    .metric b{
+      font-size: 14px;
+      color: var(--muted);
+      font-weight:600;
+    }
+    .metric .v{
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: .2px;
+      margin-top: 4px;
+    }
+    .metric .tag{
+      font-size:12px; color:var(--muted2);
+      border:1px solid rgba(255,255,255,.08);
+      padding:7px 10px; border-radius:999px;
+      background: rgba(255,255,255,.02);
+      white-space:nowrap;
+    }
+    .metric-grid{display:grid; gap:12px; margin-top:12px}
+    .api{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(70,214,255,.22);
+      background: rgba(70,214,255,.06);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    code{
+      font-family: var(--mono);
+      color: rgba(234,241,255,.9);
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    /* Sections */
+    section{padding: 34px 0}
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:16px;
+      margin-bottom: 16px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: clamp(22px, 2.4vw, 30px);
+      letter-spacing:-.35px;
+    }
+    .section-head p{
+      margin:0;
+      color: var(--muted);
+      max-width: 70ch;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .card{
+      border-radius: var(--radius2);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      overflow:hidden;
+      transition: transform .18s ease, border-color .25s ease, background .25s ease;
+    }
+    .card:hover{transform: translateY(-2px); border-color: var(--stroke2); background: rgba(255,255,255,.04)}
+    .card .pad{padding: 18px}
+    .card h3{margin:0 0 8px; font-size:16px; letter-spacing:-.2px}
+    .card p{margin:0; color: var(--muted); font-size:14px; line-height:1.6}
+
+    /* USP */
+    .usp-grid{grid-template-columns: repeat(4, 1fr)}
+    .icon{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      border: 1px solid rgba(70,214,255,.28);
+      background: rgba(70,214,255,.07);
+      margin-bottom: 12px;
+    }
+    .icon svg{opacity:.9}
+
+    /* How it works */
+    .steps{grid-template-columns: repeat(4, 1fr)}
+    .step{
+      position:relative;
+      padding:18px;
+    }
+    .step .n{
+      font-family: var(--mono);
+      color: rgba(70,214,255,.95);
+      font-size: 12px;
+      border: 1px solid rgba(70,214,255,.28);
+      background: rgba(70,214,255,.06);
+      padding: 6px 10px;
+      border-radius: 999px;
+      display:inline-flex;
+      margin-bottom: 10px;
+    }
+
+    /* Yield + risks */
+    .two-col{display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; align-items:stretch}
+    .note{
+      padding: 16px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      line-height: 1.65;
+      font-size:14px;
+    }
+    .kpi{
+      display:grid; gap:12px;
+      padding: 18px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(70,214,255,.08), rgba(255,255,255,.02));
+      overflow:hidden;
+      position:relative;
+    }
+    .kpi::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 260px at 70% 10%, rgba(70,214,255,.18), transparent 62%);
+      pointer-events:none;
+    }
+    .kpi > *{position:relative; z-index:1}
+    .kpi .big{
+      font-size: 34px;
+      letter-spacing: -1px;
+      margin: 0;
+      line-height:1.05;
+    }
+    .kpi .sub{margin:0; color: var(--muted); font-size:14px; line-height:1.6}
+    .bar{
+      height:10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      margin-top:6px;
+    }
+    .bar > i{
+      display:block; height:100%;
+      width: 62%;
+      background: linear-gradient(90deg, rgba(70,214,255,.95), rgba(42,124,255,.85));
+      border-radius:999px;
+      filter: saturate(1.05);
+    }
+    .bar-meta{
+      display:flex; justify-content:space-between; gap:10px;
+      color:var(--muted2);
+      font-size:12px;
+      margin-top:8px;
+    }
+
+    /* Security */
+    .sec-grid{grid-template-columns: repeat(2, 1fr)}
+    .bullet{
+      display:flex; gap:12px; align-items:flex-start;
+      padding: 16px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+    }
+    .check{
+      width:26px; height:26px; border-radius:10px;
+      display:grid; place-items:center;
+      border:1px solid rgba(67,255,179,.30);
+      background: rgba(67,255,179,.08);
+      margin-top:2px;
+      flex:0 0 auto;
+    }
+    .bullet b{display:block; margin-bottom:4px}
+    .bullet span{color:var(--muted); font-size:14px; line-height:1.6}
+
+    /* CTA */
+    .cta{
+      border-radius: 30px;
+      border: 1px solid rgba(70,214,255,.22);
+      background:
+        radial-gradient(860px 380px at 12% 20%, rgba(70,214,255,.20), transparent 62%),
+        radial-gradient(820px 360px at 88% 35%, rgba(42,124,255,.15), transparent 64%),
+        rgba(255,255,255,.02);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .cta h2{margin:0; font-size: clamp(20px, 2.2vw, 28px); letter-spacing:-.35px}
+    .cta p{margin:6px 0 0; color:var(--muted); line-height:1.6; font-size:14px}
+    .footer{
+      padding: 26px 0 40px;
+      color: var(--muted2);
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 18px;
+    }
+    .footer .cols{
+      display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .footer a{color: var(--muted); text-decoration: underline; text-decoration-color: rgba(234,241,255,.25)}
+    .divider{height:1px; background: rgba(255,255,255,.06); margin: 18px 0}
+
+    /* Logo (SVG) */
+    .logo{
+      width:40px; height:40px;
+      flex: 0 0 auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .logo svg{display:block}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns: 1fr; }
+      .usp-grid{grid-template-columns: repeat(2, 1fr)}
+      .steps{grid-template-columns: repeat(2, 1fr)}
+      .two-col{grid-template-columns: 1fr}
+      .sec-grid{grid-template-columns: 1fr}
+      .brand{min-width:auto}
+      nav ul{display:none}
+    }
+    @media (max-width: 520px){
+      .usp-grid{grid-template-columns: 1fr}
+      .steps{grid-template-columns: 1fr}
+      .cta{flex-direction:column; align-items:flex-start}
+    }
+
+    /* Subtle reveal animation */
+    .reveal{opacity:0; transform: translateY(10px); transition: .6s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+/* HERO watermark + orbit animation */
+    .hero{position:relative; overflow:hidden;}
+    .hero-watermark{
+      position:absolute;
+      right: -120px;
+      top: 20px;
+      width: min(620px, 70vw);
+      height: auto;
+      opacity: .22;
+      pointer-events:none;
+      filter: blur(.2px) drop-shadow(0 30px 90px rgba(0,0,0,.35));
+      z-index: 0;
+    }
+    .hero-inner{position:relative; z-index:1;}
+    .hero-watermark svg{width:100%; height:auto; display:block;}
+    .orbit{
+      transform-origin: 210px 210px;
+      will-change: transform;
+    }
+    @keyframes orbitSpinSlow{from{transform:rotate(0deg)} to{transform:rotate(360deg)}}
+    @keyframes orbitSpinMed{from{transform:rotate(0deg)} to{transform:rotate(-360deg)}}
+    @keyframes orbitSpinFast{from{transform:rotate(0deg)} to{transform:rotate(360deg)}}
+    .orbit.o1{animation: orbitSpinSlow 18s linear infinite;}
+    .orbit.o2{animation: orbitSpinMed 26s linear infinite;}
+    .orbit.o3{animation: orbitSpinFast 34s linear infinite;}
+
+    /* CRO: proof row */
+    .hero-proof{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .proof-item{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      backdrop-filter: blur(8px);
+    }
+    .p-dot{
+      width:8px; height:8px; border-radius:50%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(70,214,255,.10);
+      flex:0 0 auto;
+    }
+
+    /* Make primary CTA a touch more dominant */
+    .hero-actions .btn-primary{padding: 13px 18px; font-weight: 600;}
+
+    .hero-animation{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      margin-bottom: 16px;
+      opacity:.9;
+    }
+    .hero-animation svg{
+      width: 100%;
+      max-width: 320px;
+    }
+    .hero-animation-label{
+      font-size: 34px;
+      font-weight: 800;
+      color: rgba(234,241,255,.95);
+      letter-spacing: .8px;
+      text-shadow: 0 6px 24px rgba(70,214,255,.25);
+      margin-top: 8px;
+      font-weight:600;
+      letter-spacing:.6px;
+      color: rgba(234,241,255,.85);
+      opacity:.7;
+    }
+
+.hero-main-logo{
+      margin: 24px 0 10px;
+      display:flex;
+      justify-content:flex-start;
+    }
+    .hero-main-logo img{
+      width: min(420px, 90%);
+      height:auto;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.45));
+    }
+    .hero-logo{
+      margin-top: 18px;
+      width: min(520px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+    .hero-logo img{
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      display:block;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,.25));
+    }
+    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .badge{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 7px 10px;
+      border-radius: 999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .badge i{
+      width:8px; height:8px; border-radius:50%;
+      display:inline-block;
+      background: rgba(234,241,255,.35);
+      box-shadow: 0 0 0 6px rgba(234,241,255,.06);
+    }
+    .badge.safe i{background: rgba(67,255,179,.95); box-shadow: 0 0 0 6px rgba(67,255,179,.10)}
+    .badge.mid i{background: rgba(255,209,102,.95); box-shadow: 0 0 0 6px rgba(255,209,102,.10)}
+    .badge.high i{background: rgba(70,214,255,.95); box-shadow: 0 0 0 6px rgba(70,214,255,.10)}
+  
+    @media (max-width: 980px){
+      .hero-watermark{right:-180px; top: -10px; opacity:.16;}
+    }
+    @media (max-width: 520px){
+      .hero-watermark{right:-220px; top: -30px; opacity:.12; width: 520px;}
+    }
+
+
+    .hero-animation-left{
+      margin: 0 0 14px;
+      align-items:flex-start;
+    }
+    .hero-animation-left svg{
+      max-width: 520px;
+      transform: scaleX(1.15);
+    }
+    .hero-animation-left .hero-animation-label{
+      font-size: 34px;
+      font-weight: 800;
+      color: rgba(234,241,255,.95);
+      letter-spacing: .8px;
+      text-shadow: 0 6px 24px rgba(70,214,255,.25);
+      margin-left: 18px;
+    }
+
+
+/* Subtle strategies animation */
+#strategies .card{
+  transition: transform .5s ease, box-shadow .5s ease, border-color .5s ease;
+}
+#strategies .card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  border-color: rgba(70,214,255,.35);
+}
+#strategies .card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  background: radial-gradient(120% 120% at 10% 0%, rgba(70,214,255,.08), transparent 40%);
+  opacity:0;
+  transition: opacity .5s ease;
+  pointer-events:none;
+}
+#strategies .card:hover::after{
+  opacity:1;
+}
+
+
+/* Global subtle motion (site-wide) */
+.card{
+  position: relative;
+  transition: transform .5s ease, box-shadow .5s ease, border-color .5s ease, background .5s ease;
+}
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  border-color: rgba(70,214,255,.30);
+  background: rgba(255,255,255,.04);
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  background: radial-gradient(120% 120% at 10% 0%, rgba(70,214,255,.08), transparent 40%);
+  opacity:0;
+  transition: opacity .5s ease;
+  pointer-events:none;
+}
+.card:hover::after{opacity:1;}
+
+/* Buttons + nav links */
+.btn{
+  transition: transform .18s ease, background .35s ease, border-color .35s ease, box-shadow .35s ease, filter .35s ease;
+}
+.btn:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+.btn:active{transform: translateY(0);}
+nav a{
+  transition: color .35s ease, background .35s ease, transform .35s ease;
+}
+nav a:hover{
+  transform: translateY(-1px);
+}
+
+/* Pills/badges */
+.pill, .badge, .tag{
+  transition: background .35s ease, border-color .35s ease, transform .35s ease;
+}
+.pill:hover, .badge:hover, .tag:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.05);
+}
+
+/* Inputs (future proof) */
+input, select, textarea{
+  transition: border-color .35s ease, box-shadow .35s ease, background .35s ease;
+}
+input:focus, select:focus, textarea:focus{
+  outline: none;
+  border-color: rgba(70,214,255,.45);
+  box-shadow: 0 0 0 6px rgba(70,214,255,.10);
+}
+
+/* Smooth section entrance (already reveal exists) */
+.reveal{transition: opacity .75s ease, transform .75s ease;}
+
+
+/* === Refinements (hero animation untouched) === */
+
+/* Softer reveal timing */
+.reveal{transition: opacity .8s ease, transform .8s ease}
+
+/* Metrics micro-hover */
+.metric{
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.metric:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+  border-color: rgba(255,255,255,.16);
+}
+
+/* Section separators (visual rhythm) */
+section::before{
+  content:"";
+  display:block;
+  height:1px;
+  margin-bottom:24px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+}
+
+/* CTA emphasis without aggression */
+.cta{
+  transition: box-shadow .4s ease, transform .4s ease;
+}
+.cta:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 26px 80px rgba(0,0,0,.45);
+}
+
+/* Footer calm hover */
+.footer a{
+  transition: color .25s ease;
+}
+.footer a:hover{color: var(--text);}
+
+
+/* ===== Light theme fixes (White) ===== */
+
+/* Background: reduce haze, add subtle depth */
+body{
+  background:
+    radial-gradient(900px 520px at 12% 16%, rgba(42,124,255,.10), transparent 60%),
+    radial-gradient(860px 520px at 88% 18%, rgba(70,214,255,.10), transparent 60%),
+    radial-gradient(900px 640px at 50% 100%, rgba(42,124,255,.06), transparent 65%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+}
+
+/* Header on white */
+header{
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(10,15,30,.08);
+}
+nav a{color: rgba(11,18,34,.70);}
+nav a:hover{color: rgba(11,18,34,.92); background: rgba(10,15,30,.04);}
+
+/* Cards: ensure contrast */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.78));
+  box-shadow: 0 18px 55px rgba(10,15,30,.10);
+}
+.card:hover{
+  box-shadow: 0 26px 70px rgba(10,15,30,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.84));
+}
+
+/* Hero right metrics looked grey: make them crisp */
+.hero-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.74));
+  box-shadow: 0 22px 70px rgba(10,15,30,.12);
+}
+.metric{
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(10,15,30,.10);
+}
+.metric b{color: rgba(11,18,34,.70);}
+.metric .v{color: rgba(11,18,34,.92);}
+.metric .tag{
+  color: rgba(11,18,34,.62);
+  border: 1px solid rgba(10,15,30,.10);
+  background: rgba(10,15,30,.03);
+}
+
+/* Buttons on white */
+.btn{
+  background: rgba(255,255,255,.70);
+  border-color: rgba(10,15,30,.12);
+  color: rgba(11,18,34,.92);
+}
+.btn:hover{background: rgba(255,255,255,.92); border-color: rgba(10,15,30,.18);}
+.btn-primary{
+  color: rgba(11,18,34,.95);
+  border-color: rgba(42,124,255,.40);
+  background: linear-gradient(180deg, rgba(42,124,255,.14), rgba(70,214,255,.10));
+  box-shadow: 0 14px 44px rgba(42,124,255,.14);
+}
+
+/* Pills / badges */
+.pill, .badge{
+  background: rgba(255,255,255,.74);
+  border-color: rgba(10,15,30,.10);
+  color: rgba(11,18,34,.75);
+}
+.pill:hover, .badge:hover{
+  background: rgba(255,255,255,.92);
+  border-color: rgba(10,15,30,.16);
+}
+
+/* Main animation visibility on white:
+   keep logo essence, add subtle backdrop + strengthen contrast via filter */
+.hero-animation{
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(10,15,30,.10);
+  background: radial-gradient(120% 120% at 20% 20%, rgba(42,124,255,.08), rgba(255,255,255,.0) 55%),
+              rgba(11,18,34,.02);
+  box-shadow: 0 18px 55px rgba(10,15,30,.10);
+  width: fit-content;
+}
+.hero-animation svg{
+  filter: drop-shadow(0 18px 40px rgba(10,15,30,.10)) contrast(1.05) saturate(1.1);
+}
+.hero-animation .orbit ellipse{opacity: .95;}
+/* make the W slightly darker without changing its shape (filter) */
+
+
+/* Security section: выделить блок */
+#security{
+  position: relative;
+}
+#security::before{
+  content:"";
+  position:absolute;
+  inset: -10px 0 -10px 0;
+  background:
+    radial-gradient(900px 520px at 15% 20%, rgba(42,124,255,.08), transparent 60%),
+    radial-gradient(860px 520px at 85% 35%, rgba(70,214,255,.08), transparent 60%),
+    linear-gradient(180deg, rgba(11,18,34,.02), rgba(11,18,34,.00));
+  pointer-events:none;
+}
+#security .wrap{position:relative; z-index:1;}
+#security .section-head h2{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+#security .section-head h2::before{
+  content:"";
+  width:10px; height:10px; border-radius:50%;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  box-shadow: 0 0 0 7px rgba(42,124,255,.10);
+}
+.bullet{
+  background: rgba(255,255,255,.78);
+  border-color: rgba(10,15,30,.10);
+  box-shadow: 0 16px 45px rgba(10,15,30,.08);
+}
+.bullet span{color: rgba(11,18,34,.70);}
+.check{
+  border-color: rgba(22,163,74,.25);
+  background: rgba(22,163,74,.10);
+}
+
+/* KPI block in yield: better contrast on white */
+.kpi{
+  border-color: rgba(10,15,30,.10);
+  background: linear-gradient(180deg, rgba(42,124,255,.10), rgba(255,255,255,.78));
+}
+.kpi .big{color: rgba(11,18,34,.95);}
+.bar{background: rgba(10,15,30,.04); border-color: rgba(10,15,30,.10);}
+
+
+/* Ensure W letter visibility on white background (no layout change) */
+
+
+
+/* Force W visibility on white (black, without touching animation) */
+
+
+
+/* Ensure W stays visible on light theme */
+
+
+
+
+/* === Hero animation: no frame/backdrop === */
+.hero-animation{
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  width: auto !important;
+  border-radius: 0 !important;
+}
+
+
+
+/* === Hero copy: animated backdrop (like other blocks) === */
+.hero-copy{
+  position: relative;
+  margin-top: 10px;
+  padding: 18px 18px 16px;
+  border-radius: 28px;
+  border: 1px solid rgba(10,15,30,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.72));
+  box-shadow: 0 18px 55px rgba(10,15,30,.10);
+  overflow: hidden;
+}
+.hero-copy::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(520px 320px at 18% 22%, rgba(70,214,255,.18), transparent 62%),
+    radial-gradient(520px 340px at 86% 18%, rgba(42,124,255,.14), transparent 60%),
+    radial-gradient(520px 360px at 30% 92%, rgba(70,214,255,.10), transparent 62%);
+  filter: blur(.2px);
+  opacity: .95;
+  animation: heroGlowShift 10s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes heroGlowShift{
+  from{ transform: translate3d(-10px,-8px,0) scale(1.02); opacity:.85; }
+  to  { transform: translate3d(12px,10px,0)  scale(1.04); opacity:1; }
+}
+.hero-copy > *{ position:relative; z-index:1; }
+
+/* keep spacing tidy inside the copy card */
+.hero-copy h1{ margin-top: 0; }
+.hero-copy .disclaimer{ margin-bottom: 0; }
+
+
+
+/* === Mobile (<=520px) tuning === */
+@media (max-width: 520px){
+  .wrap{padding: 0 14px;}
+
+  /* header: keep cta usable */
+  .nav{padding: 10px 0; gap:10px;}
+  .brand{gap:10px;}
+  .brand b{font-size:14px;}
+  .brand small{font-size:11px;}
+  .nav-cta{gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+  .nav-cta .btn{padding: 10px 12px; font-size:13px;}
+
+  /* hero layout */
+  .hero{padding: 28px 0 18px;}
+  .hero-inner{gap: 14px;}
+
+  /* animation: centered & sized for phone */
+  .hero-animation-left{
+    align-items:center !important;
+    margin: 0 0 10px !important;
+  }
+  .hero-animation-left svg{
+    max-width: 280px !important;
+    transform: none !important;
+    display:block;
+    margin: 0 auto;
+  }
+
+  /* hero copy card */
+  .hero-copy{
+    padding: 16px 14px 14px !important;
+    border-radius: 22px !important;
+    margin-top: 8px !important;
+  }
+  .hero-copy::before{
+    inset: -6px !important;
+    animation-duration: 14s !important;
+  }
+  .hero-copy h1{
+    font-size: 28px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.6px;
+  }
+  .hero-copy p{
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* proof pills */
+  .hero-proof{gap:10px; margin-top:12px;}
+  .proof-item{font-size:12px; padding: 8px 10px;}
+
+  /* buttons: full width */
+  .hero-actions{flex-direction:column;}
+  .hero-actions .btn{
+    width:100%;
+    justify-content:center;
+    padding: 14px 14px;
+    font-size: 15px;
+  }
+
+  /* right card */
+  .hero-card{padding: 14px;}
+  .metric{padding: 12px;}
+  .metric .v{font-size:16px;}
+  .metric .tag{font-size:11px; padding: 6px 8px;}
+  .api{font-size: 12.5px;}
+}
+
+
+
+/* === Reveal fix: visible by default on mobile/webviews; animate only when JS works === */
+.reveal{opacity:1 !important; transform:none !important;}
+html.js .reveal{opacity:0 !important; transform: translateY(10px) !important; transition: .6s ease;}
+html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
+
+</style>
+
+  <script>
+    // Mark that JS is enabled (used for safe reveal animations)
+    document.documentElement.classList.add('js');
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#home" aria-label="White Invest — WCT">
+          <span class="logo" aria-hidden="true">
+            <!-- Minimalist W + orbital arcs, planet-like circle -->
+            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WCT logo">
+              <circle cx="32" cy="32" r="26.5" stroke="rgba(255,255,255,.14)" />
+              <!-- orbital arcs -->
+              <path d="M10 30C17 18 36 12 52 18" stroke="rgba(70,214,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M12 40C22 52 46 52 54 36" stroke="rgba(70,214,255,.7)" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M18 14C26 24 26 44 18 52" stroke="rgba(42,124,255,.65)" stroke-width="1.4" stroke-linecap="round"/>
+              <!-- W -->
+              <path d="M18 22L24.5 44L32 30L39.5 44L46 22" stroke="rgba(234,241,255,.95)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- small nodes -->
+              <circle cx="12" cy="30" r="2" fill="rgba(70,214,255,.95)"/>
+              <circle cx="54" cy="36" r="2" fill="rgba(42,124,255,.85)"/>
+            </svg>
+          </span>
+          <div>
+            <b>White Invest</b>
+            <small>WCT — World Crypto Invest</small>
+          </div>
+        </a>
+
+        <nav aria-label="Основная навигация">
+          <ul>
+            <li><a href="#features">Преимущества</a></li>
+            <li><a href="#how">Как это работает</a></li>
+            <li><a href="#yield">Доходность и риски</a></li>
+            <li><a href="#security">Безопасность</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn btn-ghost" href="#strategies">Стратегии</a>
+          <a class="btn btn-primary" href="#cta">Создать аккаунт</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+<div class="hero-inner">
+          <div class="reveal">
+            <div class="hero-animation hero-animation-left">
+              <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="wmA" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#46D6FF"/>
+                    <stop offset="1" stop-color="#2A7CFF"/>
+                  </linearGradient>
+                </defs>
+
+                <circle cx="210" cy="210" r="140" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+
+                <g class="orbit o1">
+                  <ellipse cx="210" cy="210" rx="175" ry="95" fill="none" stroke="url(#wmA)" stroke-width="4"/>
+                </g>
+                <g class="orbit o2">
+                  <ellipse cx="210" cy="210" rx="160" ry="120" fill="none" stroke="rgba(70,214,255,.55)" stroke-width="3.5"/>
+                </g>
+                <g class="orbit o3">
+                  <ellipse cx="210" cy="210" rx="120" ry="175" fill="none" stroke="rgba(42,124,255,.45)" stroke-width="3"/>
+                </g>
+                <!-- Center W -->
+                <path class="letter-w"
+                      d="M145 165 L165 260 L200 215 L235 260 L255 165"
+                      fill="none"
+                      stroke="#0B1222"
+                      stroke-width="12"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      opacity="0.65"/>
+
+
+</svg>
+</div>
+            <div class="hero-copy reveal">
+
+
+            <h1>Пассивный доход до 50% годовых</h1>
+            <p>Алгоритмическая торговля криптовалютами через API-подключение. Платформа не хранит средства пользователей и не имеет доступа к выводу — только торговля.</p>
+
+            <div class="hero-proof">
+              <div class="proof-item"><span class="p-dot"></span><span>Подключение за 1 минуту</span></div>
+              <div class="proof-item"><span class="p-dot"></span><span>Средства остаются на вашей бирже</span></div>
+              <div class="proof-item"><span class="p-dot"></span><span>Контроль рисков и отчёты</span></div>
+            </div>
+
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#cta">
+                Начать инвестировать
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a class="btn" href="#strategies">Посмотреть стратегии</a>
+            </div>
+
+            <div class="disclaimer">Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
+          
+            </div>
+</div>
+
+          <aside class="hero-card reveal" aria-label="Краткая сводка платформы">
+            <div class="metric">
+              <div>
+                <b>Режим работы</b>
+                <div class="v">Auto • API</div>
+              </div>
+              <span class="tag">Trading only</span>
+            </div>
+
+            <div class="metric-grid">
+              <div class="metric">
+                <div>
+                  <b>Капитал пользователя</b>
+                  <div class="v">На бирже</div>
+                </div>
+                <span class="tag">Не хранится у нас</span>
+              </div>
+
+              <div class="metric">
+                <div>
+                  <b>Доступ к выводу</b>
+                  <div class="v">Нет</div>
+                </div>
+                <span class="tag">Безопаснее</span>
+              </div>
+
+              <div class="metric">
+                <div>
+                  <b>Контроль рисков</b>
+                  <div class="v">Встроен</div>
+                </div>
+                <span class="tag">Прозрачная статистика</span>
+              </div>
+            </div>
+
+            <div class="api">
+              Пример подключения: <code>API Key</code> + <code>Secret</code> с ограниченными правами (без вывода).<br/>
+              Торговые алгоритмы выполняют сделки, а средства всегда остаются на вашей бирже.
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- USP -->
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <h2>Простой вход в алгоритмическую торговлю</h2>
+            <p>Строгая сетка и понятная структура — всё необходимое, чтобы быстро запустить пассивную стратегию без лишней сложности.</p>
+          </div>
+        </div>
+
+        <div class="grid usp-grid">
+          <article class="card reveal">
+            <div class="pad">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 14l3-3 3 3 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 4v16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Полностью автоматическая торговля</h3>
+              <p>Алгоритмы работают 24/7 по заданным параметрам и контролю рисков.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="pad">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>API без доступа к выводу средств</h3>
+              <p>Подключение биржи через API-ключи с отключённым выводом. Платформа торгует, но не выводит.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="pad">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M6 17V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 17V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M18 17V9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Профессиональные торговые алгоритмы</h3>
+              <p>Стратегии на основе статистики, дисциплины и управления позициями.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="pad">
+              <div class="icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2v20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M2 12h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M4 4l16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+                </svg>
+              </div>
+              <h3>Прозрачная статистика и контроль рисков</h3>
+              <p>Метрики, отчёты, ограничения по просадке и правила управления капиталом.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <h2>Как это работает</h2>
+            <p>Четыре шага — от регистрации до пассивного дохода.</p>
+          </div>
+        </div>
+
+        <div class="grid steps">
+          <article class="card reveal">
+            <div class="step">
+              <span class="n">01</span>
+              <h3>Регистрация аккаунта</h3>
+              <p>Создайте профиль и пройдите базовую настройку безопасности.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="step">
+              <span class="n">02</span>
+              <h3>Подключение биржи через API</h3>
+              <p>Добавьте API-ключи с торговыми правами (без вывода средств).</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="step">
+              <span class="n">03</span>
+              <h3>Выбор торговой стратегии</h3>
+              <p>Подберите стратегию под риск-профиль и рыночные условия.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="step">
+              <span class="n">04</span>
+              <h3>Получение пассивного дохода</h3>
+              <p>Алгоритм выполняет сделки, вы контролируете параметры и отчёты.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Yield & Risks -->
+    
+
+<section id="strategies">
+      <div class="wrap">
+        <div class="reveal" style="display:flex; justify-content:center; margin: 6px 0 14px;">
+          
+        </div>
+
+        <div class="section-head reveal">
+          <div>
+            <h2>Стратегии</h2>
+            <p>Здесь можно разместить карточки стратегий, их параметры, графики и статистику (в рамках дизайна без привязки к данным).</p>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+          <article class="card reveal">
+            <div class="pad">
+              <h3>WCT Shield</h3>
+              <p>Безопасная стратегия с акцентом на ограничение просадки и более ровную динамику.</p>
+              <div class="badges">
+                <span class="badge safe"><i></i>Низкий риск</span>
+                <span class="badge"><i></i>2–5% / мес</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="pad">
+              <h3>WCT Core</h3>
+              <p>Сбалансированный подход: компромисс между потенциальной доходностью и уровнем риска.</p>
+              <div class="badges">
+                <span class="badge mid"><i></i>Средний риск</span>
+                <span class="badge"><i></i>3–10% / мес</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="pad">
+              <h3>WCT Alpha</h3>
+              <p>Агрессивная стратегия для активных рыночных фаз с максимальным потенциалом.</p>
+              <div class="badges">
+                <span class="badge high"><i></i>Высокий риск</span>
+                <span class="badge"><i></i>до 20% / мес</span>
+              </div>
+            </div>
+          </article>
+</div>
+
+        <style>
+          @media (max-width: 980px){
+            #strategies .grid{grid-template-columns: 1fr}
+          }
+        
+/* Subtle strategies animation */
+#strategies .card{
+  transition: transform .5s ease, box-shadow .5s ease, border-color .5s ease;
+}
+#strategies .card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  border-color: rgba(70,214,255,.35);
+}
+#strategies .card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  background: radial-gradient(120% 120% at 10% 0%, rgba(70,214,255,.08), transparent 40%);
+  opacity:0;
+  transition: opacity .5s ease;
+  pointer-events:none;
+}
+#strategies .card:hover::after{
+  opacity:1;
+}
+
+</style>
+      </div>
+    </section>
+
+<section id="yield">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <h2>Доходность и риски</h2>
+            <p>Аккуратно и честно: потенциальная доходность зависит от рынка и выбранной стратегии.</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="note reveal">
+            <h3 style="margin:0 0 10px; font-size:16px;">Потенциальная доходность до 50% в год</h3>
+            <p style="margin:0;">
+              Доходность формируется рыночной волатильностью, условиями ликвидности и настройками стратегии.
+              У разных стратегий — разный профиль риска: одни стремятся к более ровной кривой, другие — к повышенному потенциалу,
+              принимая большую просадку. Важно выбирать стратегию по вашему уровню комфорта и целям.
+            </p>
+            <div class="divider"></div>
+            <p style="margin:0; color:var(--muted2);">
+              Риск-менеджмент включает лимиты просадки, ограничения на размер позиции и правила отключения при нестабильных условиях.
+            </p>
+          </div>
+
+          <div class="kpi reveal" aria-label="Иллюстрация метрик">
+            <p class="big">≤ 50% <span style="color:var(--muted); font-size:14px; font-family:var(--sans); letter-spacing:0;">в год</span></p>
+            <p class="sub">Цель — понятная автоматизация и прозрачная статистика. Не обещания, а сценарии с управлением рисками.</p>
+
+            <div>
+              <div class="bar" aria-hidden="true"><i></i></div>
+              <div class="bar-meta">
+                <span>Потенциал</span>
+                <span>Зависит от рынка</span>
+              </div>
+            </div>
+
+            <div style="display:grid; gap:10px; margin-top:6px;">
+              <div class="metric">
+                <div>
+                  <b>Риск-профиль</b>
+                  <div class="v">Гибкий</div>
+                </div>
+                <span class="tag">low • mid • high</span>
+              </div>
+
+              <div class="metric">
+                <div>
+                  <b>Прозрачность</b>
+                  <div class="v">Отчёты</div>
+                </div>
+                <span class="tag">статистика</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security -->
+    <section id="security">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <h2>Безопасность</h2>
+            <p>White Invest не хранит средства и не имеет доступа к выводу. Фокус — безопасное API-подключение и контроль рисков.</p>
+          </div>
+        </div>
+
+        <div class="grid sec-grid">
+          <div class="bullet reveal">
+            <div class="check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Платформа не хранит средства</b>
+              <span>Ваш капитал остаётся на бирже — мы не выступаем кастодианом.</span>
+            </div>
+          </div>
+
+          <div class="bullet reveal">
+            <div class="check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Нет доступа к выводу средств</b>
+              <span>Используйте API-ключи без прав на вывод — только торговые операции.</span>
+            </div>
+          </div>
+
+          <div class="bullet reveal">
+            <div class="check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Зашифрованные API-ключи</b>
+              <span>Ключи защищены шифрованием и ограничениями доступа на уровне приложения.</span>
+            </div>
+          </div>
+
+          <div class="bullet reveal">
+            <div class="check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Встроенные системы управления рисками</b>
+              <span>Лимиты просадки, контроль размера позиции и логика остановки при нестабильности.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategies anchor (simple block, can be expanded) -->
+    
+
+    <!-- CTA -->
+    <section id="cta">
+      <div class="wrap">
+        <div class="cta reveal">
+          <div>
+            <h2>Начните инвестировать с алгоритмами уже сегодня</h2>
+            <p>Подключите биржу через API и выберите стратегию под свой риск-профиль.</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#home">Создать аккаунт</a>
+            <a class="btn" href="#how">Как это работает</a>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="cols">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                <span class="dot" style="box-shadow:none"></span>
+                <b style="color:var(--text)">White Invest</b>
+                <span style="color:var(--muted2)">• WCT</span>
+              </div>
+              <div>Инвестиционная платформа • доступ к торговым алгоритмам через API</div>
+            </div>
+            <div>
+              <div style="margin-bottom:8px;"><b style="color:var(--text)">Дисклеймер</b></div>
+              <div>Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="cols">
+            <div>© <span id="y"></span> White Invest. All rights reserved.</div>
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <a href="#security">Безопасность</a>
+              <a href="#yield">Риски</a>
+              <a href="#home">Наверх</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // Reveal on scroll
+    if(!('IntersectionObserver' in window)){
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+    } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if(en.isIntersecting) en.target.classList.add("show");
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+    }
+  </script>
+</body>
+</html>
