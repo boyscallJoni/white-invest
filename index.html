@@ -257,7 +257,7 @@
     .steps{grid-template-columns: repeat(4, 1fr)}
     .step{
       position:relative;
-      padding:18px;
+      padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
     }
     .step .n{
       font-family: var(--mono);
@@ -965,6 +965,77 @@ nav a:hover{color: rgba(11,18,34,.92); background: rgba(10,15,30,.04);}
 html.js .reveal{opacity:0 !important; transform: translateY(10px) !important; transition: .6s ease;}
 html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
 
+
+/* Account modal */
+body.modal-open{ overflow:hidden; }
+.modal-overlay{
+  position:fixed; inset:0;
+  background:rgba(10,16,28,.55);
+  /* iOS/Android: backdrop-filter can block input focus in some webviews; keep it optional */
+  -webkit-backdrop-filter:saturate(140%) blur(6px);
+  backdrop-filter:saturate(140%) blur(6px);
+  display:none;
+  align-items:flex-start;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  justify-content:center;
+  padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+  z-index:9999;
+}
+.modal-overlay.open{ display:flex; }
+.modal{
+  width:min(520px, 100%);
+  background:var(--card);
+  border:1px solid rgba(120, 140, 170, .18);
+  border-radius:18px;
+  box-shadow:0 24px 64px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modal-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 18px;
+  border-bottom:1px solid rgba(120, 140, 170, .14);
+}
+.modal-title{ font-size:16px; font-weight:700; color:var(--text); }
+.modal-close{
+  width:38px; height:38px; border-radius:12px;
+  border:1px solid rgba(120, 140, 170, .18);
+  background:rgba(255,255,255,.7);
+  color:var(--text);
+  display:grid; place-items:center;
+  cursor:pointer;
+}
+.modal-body{ padding:16px 18px 18px; }
+.form-grid{ display:grid; gap:12px; }
+.field label{ display:block; font-size:13px; color:var(--muted2); margin-bottom:6px; }
+.field input{
+  width:100%;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(120, 140, 170, .22);
+  background:rgba(255,255,255,.9);
+  outline:none;
+  color:var(--text);
+  font-size:16px; /* prevent iOS zoom & improve focus */
+}
+.field input:focus{
+  border-color:rgba(124,92,255,.55);
+  box-shadow:0 0 0 4px rgba(124,92,255,.12);
+}
+.form-row{ display:flex; gap:12px; align-items:center; justify-content:flex-end; margin-top:14px; flex-wrap:wrap; }
+.muted-small{ font-size:12px; color:var(--muted2); line-height:1.35; }
+.form-status{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted2);
+}
+.form-status.error{ color:#b42318; }
+.form-status.success{ color:#067647; }
+@media (max-width: 420px){
+  .modal-head{ padding:14px 14px; }
+  .modal-body{ padding:14px 14px 16px; }
+}
+
 </style>
 
   <script>
@@ -1010,7 +1081,7 @@ html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
 
         <div class="nav-cta">
           <a class="btn btn-ghost" href="#strategies">Стратегии</a>
-          <a class="btn btn-primary" href="#cta">Создать аккаунт</a>
+          <a class="btn btn-primary" href="#cta" data-open-account="1">Создать аккаунт</a>
         </div>
       </div>
     </div>
@@ -1457,7 +1528,7 @@ html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
             <p>Подключите биржу через API и выберите стратегию под свой риск-профиль.</p>
           </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="#home">Создать аккаунт</a>
+            <a class="btn btn-primary" href="#home" data-open-account="1">Создать аккаунт</a>
             <a class="btn" href="#how">Как это работает</a>
           </div>
         </div>
@@ -1491,12 +1562,54 @@ html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
     </section>
   </main>
 
-  <script>
+  
+  <!-- Account Modal -->
+  <div class="modal-overlay" id="accountOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+      <div class="modal-head">
+        <div class="modal-title" id="accountTitle">Создать аккаунт</div>
+        <button class="modal-close" type="button" aria-label="Закрыть" id="accountCloseBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="accountForm" class="form-grid" novalidate>
+          <div class="field">
+            <label for="accEmail">Email</label>
+            <input id="accEmail" name="email" type="email" autocomplete="email" placeholder="you@mail.com" required>
+          </div>
+
+          <div class="field">
+            <label for="accPhone">Телефон</label>
+            <input id="accPhone" name="phone" type="tel" autocomplete="tel" placeholder="+79990000000" required>
+          </div>
+
+          <div class="field">
+            <label for="accTelegram">Telegram</label>
+            <input id="accTelegram" name="telegram" type="text" autocomplete="off" placeholder="@username" required>
+            <div class="muted-small" style="margin-top:6px;">Укажите ник в Telegram, чтобы менеджер мог написать вам.</div>
+          </div>
+
+          <div class="form-row">
+            <button class="btn btn-ghost" type="button" id="accountCancelBtn">Отмена</button>
+            <button class="btn btn-primary" type="submit" id="accountSubmitBtn">Отправить</button>
+          </div>
+
+          <div class="form-status" id="accountStatus" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<script>
     // Year
     document.getElementById("y").textContent = new Date().getFullYear();
 
     // Smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
+    document.querySelectorAll('a[href^="#"]:not([data-open-account])').forEach(a => {
       a.addEventListener("click", (e) => {
         const id = a.getAttribute("href");
         const el = document.querySelector(id);
@@ -1518,6 +1631,153 @@ html.js .reveal.show{opacity:1 !important; transform: translateY(0) !important;}
 
     document.querySelectorAll(".reveal").forEach(el => io.observe(el));
     }
-  </script>
+  
+
+    // Account modal + lead submit
+    const WORKER_ENDPOINT = "https://white-invest-leads.calljoni01.workers.dev/";
+
+    const overlay = document.getElementById("accountOverlay");
+    const closeBtn = document.getElementById("accountCloseBtn");
+    const cancelBtn = document.getElementById("accountCancelBtn");
+    const form = document.getElementById("accountForm");
+    const statusEl = document.getElementById("accountStatus");
+    const submitBtn = document.getElementById("accountSubmitBtn");
+
+    let lastFocusedEl = null;
+
+    function openAccountModal(){
+      if(!overlay) return;
+      lastFocusedEl = document.activeElement;
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      // iOS-friendly scroll lock
+      window.__modalScrollY = window.scrollY || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = (-window.__modalScrollY) + "px";
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      statusEl.className = "form-status";
+      statusEl.textContent = "";
+      // focus first input (avoid forced focus on mobile webviews)
+      const first = form?.querySelector("input");
+      const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if(!isCoarse){
+        requestAnimationFrame(() => first?.focus());
+      }
+}
+
+    function closeAccountModal(){
+      if(!overlay) return;
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      // restore scroll
+      const y = window.__modalScrollY || 0;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo(0, y);
+      // restore focus
+      if(lastFocusedEl && typeof lastFocusedEl.focus === "function"){
+        setTimeout(() => lastFocusedEl.focus(), 0);
+      }
+    }
+
+    // Open handlers (header + CTA buttons)
+    document.querySelectorAll("[data-open-account]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openAccountModal();
+      });
+    });
+
+    // Close handlers
+    closeBtn?.addEventListener("click", closeAccountModal);
+    cancelBtn?.addEventListener("click", closeAccountModal);
+
+    overlay?.addEventListener("click", (e) => {
+      if(e.target === overlay) closeAccountModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && overlay?.classList.contains("open")) closeAccountModal();
+    });
+
+    function normalizeTelegram(v){
+      const s = (v || "").trim();
+      if(!s) return "";
+      return s.startsWith("@") ? s : ("@" + s.replace(/^@+/, ""));
+    }
+
+    function normalizePhone(v){
+      return (v || "").trim();
+    }
+
+    function setStatus(text, kind){
+      statusEl.textContent = text || "";
+      statusEl.className = "form-status" + (kind ? (" " + kind) : "");
+    }
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = form.email?.value?.trim() || "";
+      const phone = normalizePhone(form.phone?.value);
+      const telegram = normalizeTelegram(form.telegram?.value);
+
+      if(!email || !phone || !telegram){
+        setStatus("Пожалуйста, заполните все поля.", "error");
+        return;
+      }
+
+      // basic email sanity
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if(!emailOk){
+        setStatus("Пожалуйста, проверьте Email.", "error");
+        form.email?.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Отправляем…";
+      setStatus("Отправляем заявку…");
+
+      try{
+        const res = await fetch(WORKER_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "register",
+            email,
+            phone,
+            telegram
+          })
+        });
+
+        if(!res.ok){
+          throw new Error("HTTP " + res.status);
+        }
+
+        setStatus("Спасибо за заявку, менеджер свяжется с вами в Telegram.", "success");
+
+        // clear fields
+        form.reset();
+
+        // close after a short delay
+        setTimeout(() => {
+          closeAccountModal();
+          setStatus("", "");
+        }, 1800);
+
+      }catch(err){
+        setStatus("Не удалось отправить заявку. Попробуйте ещё раз.", "error");
+      }finally{
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Отправить";
+      }
+    });
+</script>
 </body>
 </html>
