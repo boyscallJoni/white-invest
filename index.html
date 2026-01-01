@@ -1387,7 +1387,7 @@ body.modal-open{ overflow:hidden; }
           </div>
         </div>
 
-        <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="grid strategies-grid">
           <article class="card reveal">
             <div class="pad">
               <h3>WCT Shield</h3>
@@ -1423,8 +1423,10 @@ body.modal-open{ overflow:hidden; }
 </div>
 
         <style>
+          #strategies .strategies-grid{grid-template-columns: repeat(3, 1fr);}
+
           @media (max-width: 980px){
-            #strategies .grid{grid-template-columns: 1fr}
+            #strategies .strategies-grid{grid-template-columns: 1fr}
           }
         
 /* Subtle strategies animation */
