@@ -1106,6 +1106,24 @@ body.modal-open{ overflow:hidden; }
   .modal-body{ padding:14px 14px 16px; }
 }
 
+
+/* === Hover emphasis for Features + How cards (match other blocks) === */
+#features .card,
+#how .card{
+  cursor: pointer;
+}
+@media (hover:hover){
+  #features .card:hover,
+  #how .card:hover{
+    transform: translateY(-6px) !important;
+    box-shadow: 0 26px 70px rgba(10,15,30,.14) !important;
+    border-color: rgba(70,214,255,.30) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.84)) !important;
+  }
+  #features .card:hover::after,
+  #how .card:hover::after{ opacity: 1 !important; }
+}
+
 </style>
 
   <script>
