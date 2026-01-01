@@ -1124,6 +1124,44 @@ body.modal-open{ overflow:hidden; }
   #how .card:hover::after{ opacity: 1 !important; }
 }
 
+/* === Mobile: mimic desktop hover animations on tap === */
+@media (hover: none) and (pointer: coarse){
+  .card, .metric, .pill, .badge, .tag, .btn{
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Cards */
+  .card:active, .card.is-tapped{
+    transform: translateY(-6px);
+    box-shadow: 0 26px 70px rgba(10,15,30,.14);
+    border-color: rgba(70,214,255,.30);
+    background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.84));
+  }
+  .card:active::after, .card.is-tapped::after{ opacity:1; }
+
+  /* Metrics */
+  .metric:active, .metric.is-tapped{
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(10,15,30,.16);
+    border-color: rgba(10,15,30,.16);
+  }
+
+  /* Buttons */
+  .btn:active, .btn.is-tapped{
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
+
+  /* Pills / badges / tags */
+  .pill:active, .pill.is-tapped,
+  .badge:active, .badge.is-tapped,
+  .tag:active, .tag.is-tapped{
+    transform: translateY(-1px);
+    border-color: rgba(10,15,30,.16);
+    background: rgba(255,255,255,.92);
+  }
+}
+
 </style>
 
   <script>
@@ -1798,6 +1836,30 @@ body.modal-open{ overflow:hidden; }
         submitBtn.textContent = "Отправить";
       }
     });
+
+// Mobile tap feedback: add a short-lived class so animations feel like desktop hover
+(function(){
+  const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const noHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  if(!(isCoarse && noHover)) return;
+
+  const sel = '.card, .metric, .btn, .pill, .badge, .tag';
+  const tappedClass = 'is-tapped';
+  const TTL = 220;
+
+  let t;
+  function flash(el){
+    if(!el) return;
+    el.classList.add(tappedClass);
+    clearTimeout(t);
+    t = setTimeout(() => el.classList.remove(tappedClass), TTL);
+  }
+
+  document.addEventListener('touchstart', (e) => {
+    const el = e.target.closest && e.target.closest(sel);
+    if(el) flash(el);
+  }, {passive:true});
+})();
 </script>
 </body>
 </html>
