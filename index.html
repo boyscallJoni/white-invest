@@ -1,11 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>White Invest — WCT | World Crypto Invest</title>
-  <meta name="description" content="White Invest (WCT) — инвестиционная платформа с доступом к торговым алгоритмам через API. Платформа не хранит средства и не имеет доступа к выводу." />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>White Invest — WCT | World Crypto Invest</title>
+<meta content="White Invest (WCT) — инвестиционная платформа с доступом к торговым алгоритмам через API. Платформа не хранит средства и не имеет доступа к выводу." name="description"/>
+<style>
     :root{
       --bg0:#F5F7FB;
       --bg1:#FFFFFF;
@@ -1182,332 +1183,332 @@ body.modal-open{ overflow:hidden; }
   }
 }
 
-</style>
 
-  <script>
+
+/* === Mobile tap movement: make ANY tapped block/text move like .metric === */
+@media (hover: none) and (pointer: coarse){
+  /* keep taps clean */
+  *{ -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+  /* candidates (blocks + key text elements) get transition */
+  .tap-move{
+    transition: transform .18s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease, filter .28s ease, opacity .28s ease;
+    will-change: transform;
+  }
+
+  /* active state (applied by JS) */
+  .tap-move.tap-active{
+    transform: translateY(-4px);
+    filter: brightness(1.03);
+  }
+
+  /* For "card-like" items, add stronger shadow/border on tap */
+  .tap-move.tap-active.card,
+  .tap-move.tap-active.metric,
+  .tap-move.tap-active.cta,
+  .tap-move.tap-active.kpi,
+  .tap-move.tap-active.bullet,
+  .tap-move.tap-active.hero-card,
+  .tap-move.tap-active.hero-copy{
+    box-shadow: 0 26px 70px rgba(10,15,30,.14);
+    border-color: rgba(70,214,255,.30);
+    background: rgba(255,255,255,.92);
+  }
+
+  /* Small chips/badges/tags: subtle move */
+  .tap-move.tap-active.badge,
+  .tap-move.tap-active.pill,
+  .tap-move.tap-active.tag{
+    transform: translateY(-2px);
+    border-color: rgba(10,15,30,.18);
+    background: rgba(255,255,255,.92);
+  }
+
+  /* Text taps: tiny nudge (no shadow) */
+  .tap-move.tap-active.tap-text{
+    transform: translateY(-2px);
+    filter: brightness(1.02);
+  }
+}
+</style>
+<script>
     // Mark that JS is enabled (used for safe reveal animations)
     document.documentElement.classList.add('js');
   </script>
 </head>
-
 <body>
-  <header>
-    <div class="wrap">
-      <div class="nav">
-        <a class="brand" href="#home" aria-label="White Invest — WCT">
-          <span class="logo" aria-hidden="true">
-            <!-- Minimalist W + orbital arcs, planet-like circle -->
-            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WCT logo">
-              <circle cx="32" cy="32" r="26.5" stroke="rgba(255,255,255,.14)" />
-              <!-- orbital arcs -->
-              <path d="M10 30C17 18 36 12 52 18" stroke="rgba(70,214,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M12 40C22 52 46 52 54 36" stroke="rgba(70,214,255,.7)" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M18 14C26 24 26 44 18 52" stroke="rgba(42,124,255,.65)" stroke-width="1.4" stroke-linecap="round"/>
-              <!-- W -->
-              <path d="M18 22L24.5 44L32 30L39.5 44L46 22" stroke="rgba(234,241,255,.95)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- small nodes -->
-              <circle cx="12" cy="30" r="2" fill="rgba(70,214,255,.95)"/>
-              <circle cx="54" cy="36" r="2" fill="rgba(42,124,255,.85)"/>
-            </svg>
-          </span>
-          <div>
-            <b>White Invest</b>
-            <small>WCT — World Crypto Invest</small>
-          </div>
-        </a>
-
-        <nav aria-label="Основная навигация">
-          <ul>
-            <li><a href="#features">Преимущества</a></li>
-            <li><a href="#how">Как это работает</a></li>
-            <li><a href="#yield">Доходность и риски</a></li>
-            <li></li>
-          </ul>
-        </nav>
-
-        <div class="nav-cta">
-          <a class="btn btn-ghost" href="#strategies">Стратегии</a>
-          <a class="btn btn-primary" href="#cta" data-open-account="1">Создать аккаунт</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main id="home">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="wrap">
+<header>
+<div class="wrap">
+<div class="nav">
+<a aria-label="White Invest — WCT" class="brand" href="#home">
+<span aria-hidden="true" class="logo">
+<!-- Minimalist W + orbital arcs, planet-like circle -->
+<svg aria-label="WCT logo" fill="none" height="34" role="img" viewbox="0 0 64 64" width="34" xmlns="http://www.w3.org/2000/svg">
+<circle cx="32" cy="32" r="26.5" stroke="rgba(255,255,255,.14)"></circle>
+<!-- orbital arcs -->
+<path d="M10 30C17 18 36 12 52 18" stroke="rgba(70,214,255,.9)" stroke-linecap="round" stroke-width="1.6"></path>
+<path d="M12 40C22 52 46 52 54 36" stroke="rgba(70,214,255,.7)" stroke-linecap="round" stroke-width="1.6"></path>
+<path d="M18 14C26 24 26 44 18 52" stroke="rgba(42,124,255,.65)" stroke-linecap="round" stroke-width="1.4"></path>
+<!-- W -->
+<path d="M18 22L24.5 44L32 30L39.5 44L46 22" stroke="rgba(234,241,255,.95)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.2"></path>
+<!-- small nodes -->
+<circle cx="12" cy="30" fill="rgba(70,214,255,.95)" r="2"></circle>
+<circle cx="54" cy="36" fill="rgba(42,124,255,.85)" r="2"></circle>
+</svg>
+</span>
+<div>
+<b>White Invest</b>
+<small>WCT — World Crypto Invest</small>
+</div>
+</a>
+<nav aria-label="Основная навигация">
+<ul>
+<li><a href="#features">Преимущества</a></li>
+<li><a href="#how">Как это работает</a></li>
+<li><a href="#yield">Доходность и риски</a></li>
+<li></li>
+</ul>
+</nav>
+<div class="nav-cta">
+<a class="btn btn-ghost" href="#strategies">Стратегии</a>
+<a class="btn btn-primary" data-open-account="1" href="#cta">Создать аккаунт</a>
+</div>
+</div>
+</div>
+</header>
+<main id="home">
+<!-- HERO -->
+<section class="hero">
+<div class="wrap">
 <div class="hero-inner">
-          <div class="reveal">
-            <div class="hero-animation hero-animation-left">
-              <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="wmA" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#46D6FF"/>
-                    <stop offset="1" stop-color="#2A7CFF"/>
-                  </linearGradient>
-                </defs>
-
-                <circle cx="210" cy="210" r="140" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
-
-                <g class="orbit o1">
-                  <ellipse cx="210" cy="210" rx="175" ry="95" fill="none" stroke="url(#wmA)" stroke-width="4"/>
-                </g>
-                <g class="orbit o2">
-                  <ellipse cx="210" cy="210" rx="160" ry="120" fill="none" stroke="rgba(70,214,255,.55)" stroke-width="3.5"/>
-                </g>
-                <g class="orbit o3">
-                  <ellipse cx="210" cy="210" rx="120" ry="175" fill="none" stroke="rgba(42,124,255,.45)" stroke-width="3"/>
-                </g>
-                <!-- Center W -->
-                <path class="letter-w"
-                      d="M145 165 L165 260 L200 215 L235 260 L255 165"
-                      fill="none"
-                      stroke="#0B1222"
-                      stroke-width="12"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      opacity="0.65"/>
-
-
+<div class="reveal">
+<div class="hero-animation hero-animation-left">
+<svg viewbox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="wmA" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#46D6FF"></stop>
+<stop offset="1" stop-color="#2A7CFF"></stop>
+</lineargradient>
+</defs>
+<circle cx="210" cy="210" fill="none" r="140" stroke="rgba(255,255,255,.12)" stroke-width="2"></circle>
+<g class="orbit o1">
+<ellipse cx="210" cy="210" fill="none" rx="175" ry="95" stroke="url(#wmA)" stroke-width="4"></ellipse>
+</g>
+<g class="orbit o2">
+<ellipse cx="210" cy="210" fill="none" rx="160" ry="120" stroke="rgba(70,214,255,.55)" stroke-width="3.5"></ellipse>
+</g>
+<g class="orbit o3">
+<ellipse cx="210" cy="210" fill="none" rx="120" ry="175" stroke="rgba(42,124,255,.45)" stroke-width="3"></ellipse>
+</g>
+<!-- Center W -->
+<path class="letter-w" d="M145 165 L165 260 L200 215 L235 260 L255 165" fill="none" opacity="0.65" stroke="#0B1222" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></path>
 </svg>
 </div>
-            <div class="hero-copy reveal">
-
-
-            <h1>Пассивный доход до 50% годовых</h1>
-            <p>Алгоритмическая торговля криптовалютами через API-подключение. Платформа не хранит средства пользователей и не имеет доступа к выводу — только торговля.</p>
-
-            <div class="hero-proof"></div>
-
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#cta">
+<div class="hero-copy reveal">
+<h1>Пассивный доход до 50% годовых</h1>
+<p>Алгоритмическая торговля криптовалютами через API-подключение. Платформа не хранит средства пользователей и не имеет доступа к выводу — только торговля.</p>
+<div class="hero-proof"></div>
+<div class="hero-actions">
+<a class="btn btn-primary" href="#cta">
                 Начать инвестировать
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-              <a class="btn" href="#strategies">Посмотреть стратегии</a>
-            </div>
-
-            <div class="disclaimer">Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
-          
-            </div>
+                <svg aria-hidden="true" fill="none" height="18" viewbox="0 0 24 24" width="18">
+<path d="M5 12h12" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M13 6l6 6-6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+<a class="btn" href="#strategies">Посмотреть стратегии</a>
 </div>
-
-          <aside class="hero-card reveal" aria-label="Краткая сводка платформы">
-            <div class="metric">
-              <div>
-                <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 3h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 3v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="6" width="14" height="13" rx="4" stroke="currentColor" stroke-width="2"/><path d="M8.5 11v0.01M15.5 11v0.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M9 15c1.8 1.6 4.2 1.6 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Режим торговли</b>
-                <div class="v">Auto • API</div>
-              </div>
-              <span class="tag">Только торговля</span>
-            </div>
-
-            <div class="metric-grid">
-              <div class="metric">
-                <div>
-                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="6" y="11" width="12" height="10" rx="3" stroke="currentColor" stroke-width="2"/><path d="M12 15v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Хранение средств</b>
-                  <div class="v">На бирже</div>
-                </div>
-                <span class="tag">Без депозита</span>
-              </div>
-
-              <div class="metric">
-                <div>
-                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 7l-9 10-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22A10 10 0 1 0 12 2a10 10 0 0 0 0 20z" stroke="currentColor" stroke-width="2" opacity=".25"/></svg></span>Права на вывод</b>
-                  <div class="v">Отключены</div>
-                </div>
-                <span class="tag">API без вывода</span>
-              </div>
-
-              <div class="metric">
-                <div>
-                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 4v6c0 6-8 10-8 10S4 18 4 12V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 13l2-2 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Риск‑менеджмент</b>
-                  <div class="v">Встроен</div>
-                </div>
-                <span class="tag">Лимиты и отчёты</span>
-              </div>
-            </div>
-
-            <div class="api">
+<div class="disclaimer">Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
+</div>
+</div>
+<aside aria-label="Краткая сводка платформы" class="hero-card reveal">
+<div class="metric">
+<div>
+<b><span aria-hidden="true" class="mini-ico"><svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 3h6" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path><path d="M12 3v3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path><rect height="13" rx="4" stroke="currentColor" stroke-width="2" width="14" x="5" y="6"></rect><path d="M8.5 11v0.01M15.5 11v0.01" stroke="currentColor" stroke-linecap="round" stroke-width="3"></path><path d="M9 15c1.8 1.6 4.2 1.6 6 0" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></span>Режим торговли</b>
+<div class="v">Auto • API</div>
+</div>
+<span class="tag">Только торговля</span>
+</div>
+<div class="metric-grid">
+<div class="metric">
+<div>
+<b><span aria-hidden="true" class="mini-ico"><svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path><rect height="10" rx="3" stroke="currentColor" stroke-width="2" width="12" x="6" y="11"></rect><path d="M12 15v3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></span>Хранение средств</b>
+<div class="v">На бирже</div>
+</div>
+<span class="tag">Без депозита</span>
+</div>
+<div class="metric">
+<div>
+<b><span aria-hidden="true" class="mini-ico"><svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 7l-9 10-4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path><path d="M12 22A10 10 0 1 0 12 2a10 10 0 0 0 0 20z" opacity=".25" stroke="currentColor" stroke-width="2"></path></svg></span>Права на вывод</b>
+<div class="v">Отключены</div>
+</div>
+<span class="tag">API без вывода</span>
+</div>
+<div class="metric">
+<div>
+<b><span aria-hidden="true" class="mini-ico"><svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 4v6c0 6-8 10-8 10S4 18 4 12V6l8-4z" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path><path d="M8 13l2-2 2 2 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></span>Риск‑менеджмент</b>
+<div class="v">Встроен</div>
+</div>
+<span class="tag">Лимиты и отчёты</span>
+</div>
+</div>
+<div class="api">
               Пример подключения: <code>API Key</code> + <code>Secret</code> с ограниченными правами (без вывода).<br/>
               Торговые алгоритмы выполняют сделки, а средства всегда остаются на вашей бирже.
             </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- USP -->
-    <section id="features">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div>
-            <h2>Простой вход в алгоритмическую торговлю</h2>
-            <p>Строгая сетка и понятная структура — всё необходимое, чтобы быстро запустить пассивную стратегию без лишней сложности.</p>
-          </div>
-        </div>
-
-        <div class="grid usp-grid">
-          <article class="card reveal">
-            <div class="pad">
-              <div class="icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 14l3-3 3 3 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4 4v16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>Полностью автоматическая торговля</h3>
-              <p>Алгоритмы работают 24/7 по заданным параметрам и контролю рисков.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="pad">
-              <div class="icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h3>API без доступа к выводу средств</h3>
-              <p>Подключение биржи через API-ключи с отключённым выводом. Платформа торгует, но не выводит.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="pad">
-              <div class="icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M6 17V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M12 17V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M18 17V9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h3>Профессиональные торговые алгоритмы</h3>
-              <p>Стратегии на основе статистики, дисциплины и управления позициями.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="pad">
-              <div class="icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2v20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M2 12h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M4 4l16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>
-                </svg>
-              </div>
-              <h3>Прозрачная статистика и контроль рисков</h3>
-              <p>Метрики, отчёты, ограничения по просадке и правила управления капиталом.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- How it works -->
-    <section id="how">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div>
-            <h2>Как это работает</h2>
-            <p>Четыре шага — от регистрации до пассивного дохода.</p>
-          </div>
-        </div>
-
-        <div class="grid steps">
-          <article class="card reveal">
-            <div class="step">
-              <span class="n">01</span>
-              <h3>Регистрация аккаунта</h3>
-              <p>Создайте профиль и пройдите базовую настройку безопасности.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="step">
-              <span class="n">02</span>
-              <h3>Подключение биржи через API</h3>
-              <p>Добавьте API-ключи с торговыми правами (без вывода средств).</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="step">
-              <span class="n">03</span>
-              <h3>Выбор торговой стратегии</h3>
-              <p>Подберите стратегию под риск-профиль и рыночные условия.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="step">
-              <span class="n">04</span>
-              <h3>Получение пассивного дохода</h3>
-              <p>Алгоритм выполняет сделки, вы контролируете параметры и отчёты.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Yield & Risks -->
-    
-
-<section id="strategies">
-      <div class="wrap">
-        <div class="reveal" style="display:flex; justify-content:center; margin: 6px 0 14px;">
-          
-        </div>
-
-        <div class="section-head reveal">
-          <div>
-            <h2>Стратегии</h2>
-            <p>Здесь можно разместить карточки стратегий, их параметры, графики и статистику (в рамках дизайна без привязки к данным).</p>
-          </div>
-        </div>
-
-        <div class="grid strategies-grid">
-          <article class="card reveal">
-            <div class="pad">
-              <h3>WCT Shield</h3>
-              <p>Безопасная стратегия с акцентом на ограничение просадки и более ровную динамику.</p>
-              <div class="badges">
-                <span class="badge safe"><i></i>Низкий риск</span>
-                <span class="badge"><i></i>2–5% / мес</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="pad">
-              <h3>WCT Core</h3>
-              <p>Сбалансированный подход: компромисс между потенциальной доходностью и уровнем риска.</p>
-              <div class="badges">
-                <span class="badge mid"><i></i>Средний риск</span>
-                <span class="badge"><i></i>3–10% / мес</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="pad">
-              <h3>WCT Alpha</h3>
-              <p>Агрессивная стратегия для активных рыночных фаз с максимальным потенциалом.</p>
-              <div class="badges">
-                <span class="badge high"><i></i>Высокий риск</span>
-                <span class="badge"><i></i>до 20% / мес</span>
-              </div>
-            </div>
-          </article>
+</aside>
 </div>
-
-        <style>
+</div>
+</section>
+<!-- USP -->
+<section id="features">
+<div class="wrap">
+<div class="section-head reveal">
+<div>
+<h2>Простой вход в алгоритмическую торговлю</h2>
+<p>Строгая сетка и понятная структура — всё необходимое, чтобы быстро запустить пассивную стратегию без лишней сложности.</p>
+</div>
+</div>
+<div class="grid usp-grid">
+<article class="card reveal">
+<div class="pad">
+<div aria-hidden="true" class="icon">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20">
+<path d="M6 14l3-3 3 3 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M4 4v16h16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3>Полностью автоматическая торговля</h3>
+<p>Алгоритмы работают 24/7 по заданным параметрам и контролю рисков.</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="pad">
+<div aria-hidden="true" class="icon">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20">
+<path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M9 12l2 2 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3>API без доступа к выводу средств</h3>
+<p>Подключение биржи через API-ключи с отключённым выводом. Платформа торгует, но не выводит.</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="pad">
+<div aria-hidden="true" class="icon">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20">
+<path d="M4 19h16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M6 17V7" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M12 17V5" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M18 17V9" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3>Профессиональные торговые алгоритмы</h3>
+<p>Стратегии на основе статистики, дисциплины и управления позициями.</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="pad">
+<div aria-hidden="true" class="icon">
+<svg fill="none" height="20" viewbox="0 0 24 24" width="20">
+<path d="M12 2v20" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M2 12h20" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M4 4l16 16" opacity=".55" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3>Прозрачная статистика и контроль рисков</h3>
+<p>Метрики, отчёты, ограничения по просадке и правила управления капиталом.</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- How it works -->
+<section id="how">
+<div class="wrap">
+<div class="section-head reveal">
+<div>
+<h2>Как это работает</h2>
+<p>Четыре шага — от регистрации до пассивного дохода.</p>
+</div>
+</div>
+<div class="grid steps">
+<article class="card reveal">
+<div class="step">
+<span class="n">01</span>
+<h3>Регистрация аккаунта</h3>
+<p>Создайте профиль и пройдите базовую настройку безопасности.</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="step">
+<span class="n">02</span>
+<h3>Подключение биржи через API</h3>
+<p>Добавьте API-ключи с торговыми правами (без вывода средств).</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="step">
+<span class="n">03</span>
+<h3>Выбор торговой стратегии</h3>
+<p>Подберите стратегию под риск-профиль и рыночные условия.</p>
+</div>
+</article>
+<article class="card reveal">
+<div class="step">
+<span class="n">04</span>
+<h3>Получение пассивного дохода</h3>
+<p>Алгоритм выполняет сделки, вы контролируете параметры и отчёты.</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Yield & Risks -->
+<section id="strategies">
+<div class="wrap">
+<div class="reveal" style="display:flex; justify-content:center; margin: 6px 0 14px;">
+</div>
+<div class="section-head reveal">
+<div>
+<h2>Стратегии</h2>
+<p>Здесь можно разместить карточки стратегий, их параметры, графики и статистику (в рамках дизайна без привязки к данным).</p>
+</div>
+</div>
+<div class="grid strategies-grid">
+<article class="card reveal">
+<div class="pad">
+<h3>WCT Shield</h3>
+<p>Безопасная стратегия с акцентом на ограничение просадки и более ровную динамику.</p>
+<div class="badges">
+<span class="badge safe"><i></i>Низкий риск</span>
+<span class="badge"><i></i>2–5% / мес</span>
+</div>
+</div>
+</article>
+<article class="card reveal">
+<div class="pad">
+<h3>WCT Core</h3>
+<p>Сбалансированный подход: компромисс между потенциальной доходностью и уровнем риска.</p>
+<div class="badges">
+<span class="badge mid"><i></i>Средний риск</span>
+<span class="badge"><i></i>3–10% / мес</span>
+</div>
+</div>
+</article>
+<article class="card reveal">
+<div class="pad">
+<h3>WCT Alpha</h3>
+<p>Агрессивная стратегия для активных рыночных фаз с максимальным потенциалом.</p>
+<div class="badges">
+<span class="badge high"><i></i>Высокий риск</span>
+<span class="badge"><i></i>до 20% / мес</span>
+</div>
+</div>
+</article>
+</div>
+<style>
           @media (max-width: 980px){
             #strategies .grid{grid-template-columns: 1fr}
           }
@@ -1536,152 +1537,131 @@ body.modal-open{ overflow:hidden; }
 }
 
 </style>
-      </div>
-    </section>
-
+</div>
+</section>
 <section id="yield">
-      <div class="wrap">
-        <div class="two-col">
-          <!-- LEFT (text) -->
-          <div class="note reveal">
-            <h2>Доходность и риски</h2>
-            <p class="lead">Аккуратно и честно: потенциальная доходность зависит от рынка и выбранной стратегии.</p>
-
-            <h3>Потенциальная доходность до 50% в год</h3>
-            <p>
+<div class="wrap">
+<div class="two-col">
+<!-- LEFT (text) -->
+<div class="note reveal">
+<h2>Доходность и риски</h2>
+<p class="lead">Аккуратно и честно: потенциальная доходность зависит от рынка и выбранной стратегии.</p>
+<h3>Потенциальная доходность до 50% в год</h3>
+<p>
               Доходность формируется рыночной волатильностью, условиями ликвидности и настройками стратегии.
             </p>
-            <p>
+<p>
               Риск‑менеджмент включает лимиты просадки, ограничения на размер позиции и правила отключения при нестабильных условиях.
             </p>
-          </div>
-
-          <!-- RIGHT (card) -->
-          <div class="kpi reveal" aria-label="Иллюстрация метрик">
-            <p class="big">≤ 50% <span style="color:var(--muted); font-size:14px; font-family:var(--sans); letter-spacing:0;">в год</span></p>
-            <p class="sub">Цель — понятная автоматизация и прозрачная статистика.</p>
-
-            <div>
-              <div class="bar" aria-hidden="true"><i></i></div>
-              <div class="bar-meta">
-                <span>Потенциал</span>
-                <span>Зависит от рынка</span>
-              </div>
-            </div>
-
-            <div style="display:grid; gap:12px; margin-top:8px;">
-              <div class="metric">
-                <div>
-                  <b>Риск-профиль</b>
-                  <div class="v">Гибкий</div>
-                </div>
-                <span class="tag">low • mid • high</span>
-              </div>
-
-              <div class="metric">
-                <div>
-                  <b>Прозрачность</b>
-                  <div class="v">Отчёты</div>
-                </div>
-                <span class="tag">статистика</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Security -->
-    
-
-    <!-- Strategies anchor (simple block, can be expanded) -->
-    
-
-    <!-- CTA -->
-    <section id="cta">
-      <div class="wrap">
-        <div class="cta reveal">
-          <div>
-            <h2>Начните инвестировать с White Invest уже сегодня</h2>
-            <p>Подключите биржу через API и выберите стратегию под свой риск-профиль.</p>
-          </div>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="#home" data-open-account="1">Создать аккаунт</a>
-            <a class="btn" href="#how">Как это работает</a>
-          </div>
-        </div>
-
-        <div class="footer">
-          <div class="cols">
-            <div>
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <span class="dot" style="box-shadow:none"></span>
-                <b style="color:var(--text)">White Invest</b>
-                <span style="color:var(--muted2)">• WCT</span>
-              </div>
-              <div>Инвестиционная платформа • доступ к торговым алгоритмам через API</div>
-            </div>
-            <div>
-              <div style="margin-bottom:8px;"><b style="color:var(--text)">Дисклеймер</b></div>
-              <div>Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="cols">
-            <div>© <span id="y"></span> White Invest. All rights reserved.</div>
-            <div style="display:flex; gap:14px; flex-wrap:wrap;">
-              
-              <a href="#yield">Риски</a>
-              <a href="#home">Наверх</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  
-  <!-- Account Modal -->
-  <div class="modal-overlay" id="accountOverlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
-      <div class="modal-head">
-        <div class="modal-title" id="accountTitle">Создать аккаунт</div>
-        <button class="modal-close" type="button" aria-label="Закрыть" id="accountCloseBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="accountForm" class="form-grid" novalidate>
-          <div class="field">
-            <label for="accEmail">Email</label>
-            <input id="accEmail" name="email" type="email" autocomplete="email" placeholder="you@mail.com" required>
-          </div>
-
-          <div class="field">
-            <label for="accPhone">Телефон</label>
-            <input id="accPhone" name="phone" type="tel" autocomplete="tel" placeholder="+79990000000" required>
-          </div>
-
-          <div class="field">
-            <label for="accTelegram">Telegram</label>
-            <input id="accTelegram" name="telegram" type="text" autocomplete="off" placeholder="@username" required>
-            <div class="muted-small" style="margin-top:6px;">Укажите ник в Telegram, чтобы менеджер мог написать вам.</div>
-          </div>
-
-          <div class="form-row">
-            <button class="btn btn-ghost" type="button" id="accountCancelBtn">Отмена</button>
-            <button class="btn btn-primary" type="submit" id="accountSubmitBtn">Отправить</button>
-          </div>
-
-          <div class="form-status" id="accountStatus" aria-live="polite"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-
+</div>
+<!-- RIGHT (card) -->
+<div aria-label="Иллюстрация метрик" class="kpi reveal">
+<p class="big">≤ 50% <span style="color:var(--muted); font-size:14px; font-family:var(--sans); letter-spacing:0;">в год</span></p>
+<p class="sub">Цель — понятная автоматизация и прозрачная статистика.</p>
+<div>
+<div aria-hidden="true" class="bar"><i></i></div>
+<div class="bar-meta">
+<span>Потенциал</span>
+<span>Зависит от рынка</span>
+</div>
+</div>
+<div style="display:grid; gap:12px; margin-top:8px;">
+<div class="metric">
+<div>
+<b>Риск-профиль</b>
+<div class="v">Гибкий</div>
+</div>
+<span class="tag">low • mid • high</span>
+</div>
+<div class="metric">
+<div>
+<b>Прозрачность</b>
+<div class="v">Отчёты</div>
+</div>
+<span class="tag">статистика</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Security -->
+<!-- Strategies anchor (simple block, can be expanded) -->
+<!-- CTA -->
+<section id="cta">
+<div class="wrap">
+<div class="cta reveal">
+<div>
+<h2>Начните инвестировать с White Invest уже сегодня</h2>
+<p>Подключите биржу через API и выберите стратегию под свой риск-профиль.</p>
+</div>
+<div style="display:flex; gap:12px; flex-wrap:wrap;">
+<a class="btn btn-primary" data-open-account="1" href="#home">Создать аккаунт</a>
+<a class="btn" href="#how">Как это работает</a>
+</div>
+</div>
+<div class="footer">
+<div class="cols">
+<div>
+<div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+<span class="dot" style="box-shadow:none"></span>
+<b style="color:var(--text)">White Invest</b>
+<span style="color:var(--muted2)">• WCT</span>
+</div>
+<div>Инвестиционная платформа • доступ к торговым алгоритмам через API</div>
+</div>
+<div>
+<div style="margin-bottom:8px;"><b style="color:var(--text)">Дисклеймер</b></div>
+<div>Прошлая доходность не гарантирует будущие результаты. Торговля криптовалютами связана с рисками.</div>
+</div>
+</div>
+<div class="divider"></div>
+<div class="cols">
+<div>© <span id="y"></span> White Invest. All rights reserved.</div>
+<div style="display:flex; gap:14px; flex-wrap:wrap;">
+<a href="#yield">Риски</a>
+<a href="#home">Наверх</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Account Modal -->
+<div aria-hidden="true" class="modal-overlay" id="accountOverlay">
+<div aria-labelledby="accountTitle" aria-modal="true" class="modal" role="dialog">
+<div class="modal-head">
+<div class="modal-title" id="accountTitle">Создать аккаунт</div>
+<button aria-label="Закрыть" class="modal-close" id="accountCloseBtn" type="button">
+<svg aria-hidden="true" fill="none" height="16" viewbox="0 0 24 24" width="16">
+<path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="modal-body">
+<form class="form-grid" id="accountForm" novalidate="">
+<div class="field">
+<label for="accEmail">Email</label>
+<input autocomplete="email" id="accEmail" name="email" placeholder="you@mail.com" required="" type="email"/>
+</div>
+<div class="field">
+<label for="accPhone">Телефон</label>
+<input autocomplete="tel" id="accPhone" name="phone" placeholder="+79990000000" required="" type="tel"/>
+</div>
+<div class="field">
+<label for="accTelegram">Telegram</label>
+<input autocomplete="off" id="accTelegram" name="telegram" placeholder="@username" required="" type="text"/>
+<div class="muted-small" style="margin-top:6px;">Укажите ник в Telegram, чтобы менеджер мог написать вам.</div>
+</div>
+<div class="form-row">
+<button class="btn btn-ghost" id="accountCancelBtn" type="button">Отмена</button>
+<button class="btn btn-primary" id="accountSubmitBtn" type="submit">Отправить</button>
+</div>
+<div aria-live="polite" class="form-status" id="accountStatus"></div>
+</form>
+</div>
+</div>
+</div>
 <script>
     // Year
     document.getElementById("y").textContent = new Date().getFullYear();
@@ -1879,6 +1859,90 @@ body.modal-open{ overflow:hidden; }
     const el = e.target.closest && e.target.closest(sel);
     if(el) flash(el);
   }, {passive:true});
+})();
+</script>
+
+<script>
+/* === Mobile tap movement everywhere (blocks + text) === */
+(function(){
+  const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const noHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  if(!(isCoarse && noHover)) return;
+
+  // Selectors for "block-like" components
+  const BLOCK_SEL = [
+    '.card', '.metric', '.btn', '.pill', '.badge', '.tag',
+    '.cta', '.kpi', '.bullet', '.hero-card', '.hero-copy', '.api', '.note'
+  ].join(',');
+
+  // Selectors for text that should also move
+  const TEXT_SEL = 'h1,h2,h3,p,small,b,span,code,a,li';
+
+  // Mark elements as tappable (no layout changes, only class)
+  function markTapTargets(){
+    document.querySelectorAll(BLOCK_SEL).forEach(el => el.classList.add('tap-move'));
+    document.querySelectorAll(TEXT_SEL).forEach(el => {
+      // skip if it's inside form inputs or is an SVG path etc
+      if(el.closest('input,textarea,select,button')) return;
+      // if it's already within a block target, we still allow text tap feedback
+      el.classList.add('tap-move','tap-text');
+    });
+  }
+
+  function clearActive(el){
+    if(!el) return;
+    el.classList.remove('tap-active');
+  }
+
+  let activeEl = null;
+  let clearTimer = null;
+
+  function setActive(el){
+    if(!el) return;
+    if(activeEl && activeEl !== el) clearActive(activeEl);
+    activeEl = el;
+    el.classList.add('tap-active');
+    // safety clear
+    if(clearTimer) clearTimeout(clearTimer);
+    clearTimer = setTimeout(() => clearActive(el), 220);
+  }
+
+  function pickTarget(e){
+    const t = e.target;
+    if(!t) return null;
+
+    // If user taps a link/button/card etc — prefer closest block element
+    const block = t.closest(BLOCK_SEL);
+    if(block) return block;
+
+    // Otherwise animate the text element itself (closest readable node)
+    const txt = t.closest(TEXT_SEL);
+    if(txt) return txt;
+
+    return null;
+  }
+
+  // Use touchstart for instant feedback; also support pointer events
+  document.addEventListener('touchstart', (e) => {
+    const el = pickTarget(e);
+    if(el) setActive(el);
+  }, {passive:true});
+
+  document.addEventListener('touchend', () => {
+    if(activeEl) clearActive(activeEl);
+  }, {passive:true});
+
+  document.addEventListener('touchcancel', () => {
+    if(activeEl) clearActive(activeEl);
+  }, {passive:true});
+
+  // Also handle keyboard focus (accessibility) lightly
+  document.addEventListener('focusin', (e) => {
+    const el = e.target && e.target.closest ? e.target.closest(BLOCK_SEL) : null;
+    if(el) el.classList.add('tap-move');
+  });
+
+  markTapTargets();
 })();
 </script>
 </body>
