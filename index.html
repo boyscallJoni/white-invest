@@ -151,6 +151,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       padding: 18px;
+      align-self: flex-start;
     }
     .hero-card::before{
       content:"";
@@ -174,7 +175,10 @@
       font-size: 14px;
       color: var(--muted);
       font-weight:600;
+          display:inline-flex; align-items:center; gap:8px;
     }
+    .mini-ico{width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center; color: rgba(42,124,255,.85)}
+    .mini-ico svg{width:16px; height:16px; display:block}
     .metric .v{
       font-family: var(--mono);
       font-size: 18px;
@@ -272,7 +276,7 @@
     }
 
     /* Yield + risks */
-    .two-col{display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; align-items:stretch}
+    .two-col{display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; align-items:flex-start}
     .note{
       padding: 16px;
       border-radius: var(--radius2);
@@ -298,6 +302,62 @@
       pointer-events:none;
     }
     .kpi > *{position:relative; z-index:1}
+
+    /* === Yield section: match screenshot (left text + right KPI aligned on one горизонт) === */
+    #yield .two-col{ gap: 38px; align-items:flex-start; }
+    #yield .note{
+      padding: 0;
+      border: 0;
+      background: transparent;
+      border-radius: 0;
+      color: var(--text);
+    }
+    #yield .note h2{
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3.2vw, 44px);
+      letter-spacing: -0.8px;
+      line-height: 1.05;
+    }
+    #yield .note .lead{
+      margin: 0 0 34px;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    #yield .note h3{
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -0.25px;
+      color: var(--text);
+    }
+    #yield .note p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 70ch;
+    }
+    #yield .note .muted2{
+      margin-top: 16px;
+      color: var(--muted2);
+      font-size: 15px;
+    }
+
+    /* Right KPI card: a bit larger like screenshot */
+    #yield .kpi{
+      padding: 22px;
+      border-radius: 28px;
+    }
+    #yield .kpi .big{
+      font-size: 46px;
+      letter-spacing: -1.2px;
+    }
+    #yield .kpi .sub{
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
     .kpi .big{
       font-size: 34px;
       letter-spacing: -1px;
@@ -404,6 +464,7 @@
       .steps{grid-template-columns: 1fr}
       .cta{flex-direction:column; align-items:flex-start}
     }
+
 
     /* Subtle reveal animation */
     .reveal{opacity:0; transform: translateY(10px); transition: .6s ease}
@@ -1075,7 +1136,7 @@ body.modal-open{ overflow:hidden; }
             <li><a href="#features">Преимущества</a></li>
             <li><a href="#how">Как это работает</a></li>
             <li><a href="#yield">Доходность и риски</a></li>
-            <li><a href="#security">Безопасность</a></li>
+            <li></li>
           </ul>
         </nav>
 
@@ -1132,11 +1193,7 @@ body.modal-open{ overflow:hidden; }
             <h1>Пассивный доход до 50% годовых</h1>
             <p>Алгоритмическая торговля криптовалютами через API-подключение. Платформа не хранит средства пользователей и не имеет доступа к выводу — только торговля.</p>
 
-            <div class="hero-proof">
-              <div class="proof-item"><span class="p-dot"></span><span>Подключение за 1 минуту</span></div>
-              <div class="proof-item"><span class="p-dot"></span><span>Средства остаются на вашей бирже</span></div>
-              <div class="proof-item"><span class="p-dot"></span><span>Контроль рисков и отчёты</span></div>
-            </div>
+            <div class="hero-proof"></div>
 
 
             <div class="hero-actions">
@@ -1158,35 +1215,35 @@ body.modal-open{ overflow:hidden; }
           <aside class="hero-card reveal" aria-label="Краткая сводка платформы">
             <div class="metric">
               <div>
-                <b>Режим работы</b>
+                <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 3h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 3v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="6" width="14" height="13" rx="4" stroke="currentColor" stroke-width="2"/><path d="M8.5 11v0.01M15.5 11v0.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M9 15c1.8 1.6 4.2 1.6 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Режим торговли</b>
                 <div class="v">Auto • API</div>
               </div>
-              <span class="tag">Trading only</span>
+              <span class="tag">Только торговля</span>
             </div>
 
             <div class="metric-grid">
               <div class="metric">
                 <div>
-                  <b>Капитал пользователя</b>
+                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="6" y="11" width="12" height="10" rx="3" stroke="currentColor" stroke-width="2"/><path d="M12 15v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Хранение средств</b>
                   <div class="v">На бирже</div>
                 </div>
-                <span class="tag">Не хранится у нас</span>
+                <span class="tag">Без депозита</span>
               </div>
 
               <div class="metric">
                 <div>
-                  <b>Доступ к выводу</b>
-                  <div class="v">Нет</div>
+                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 7l-9 10-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22A10 10 0 1 0 12 2a10 10 0 0 0 0 20z" stroke="currentColor" stroke-width="2" opacity=".25"/></svg></span>Права на вывод</b>
+                  <div class="v">Отключены</div>
                 </div>
-                <span class="tag">Безопаснее</span>
+                <span class="tag">API без вывода</span>
               </div>
 
               <div class="metric">
                 <div>
-                  <b>Контроль рисков</b>
+                  <b><span class="mini-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 4v6c0 6-8 10-8 10S4 18 4 12V6l8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 13l2-2 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Риск‑менеджмент</b>
                   <div class="v">Встроен</div>
                 </div>
-                <span class="tag">Прозрачная статистика</span>
+                <span class="tag">Лимиты и отчёты</span>
               </div>
             </div>
 
@@ -1399,30 +1456,25 @@ body.modal-open{ overflow:hidden; }
 
 <section id="yield">
       <div class="wrap">
-        <div class="section-head reveal">
-          <div>
-            <h2>Доходность и риски</h2>
-            <p>Аккуратно и честно: потенциальная доходность зависит от рынка и выбранной стратегии.</p>
-          </div>
-        </div>
-
         <div class="two-col">
+          <!-- LEFT (text) -->
           <div class="note reveal">
-            <h3 style="margin:0 0 10px; font-size:16px;">Потенциальная доходность до 50% в год</h3>
-            <p style="margin:0;">
+            <h2>Доходность и риски</h2>
+            <p class="lead">Аккуратно и честно: потенциальная доходность зависит от рынка и выбранной стратегии.</p>
+
+            <h3>Потенциальная доходность до 50% в год</h3>
+            <p>
               Доходность формируется рыночной волатильностью, условиями ликвидности и настройками стратегии.
-              У разных стратегий — разный профиль риска: одни стремятся к более ровной кривой, другие — к повышенному потенциалу,
-              принимая большую просадку. Важно выбирать стратегию по вашему уровню комфорта и целям.
             </p>
-            <div class="divider"></div>
-            <p style="margin:0; color:var(--muted2);">
-              Риск-менеджмент включает лимиты просадки, ограничения на размер позиции и правила отключения при нестабильных условиях.
+            <p>
+              Риск‑менеджмент включает лимиты просадки, ограничения на размер позиции и правила отключения при нестабильных условиях.
             </p>
           </div>
 
+          <!-- RIGHT (card) -->
           <div class="kpi reveal" aria-label="Иллюстрация метрик">
             <p class="big">≤ 50% <span style="color:var(--muted); font-size:14px; font-family:var(--sans); letter-spacing:0;">в год</span></p>
-            <p class="sub">Цель — понятная автоматизация и прозрачная статистика. Не обещания, а сценарии с управлением рисками.</p>
+            <p class="sub">Цель — понятная автоматизация и прозрачная статистика.</p>
 
             <div>
               <div class="bar" aria-hidden="true"><i></i></div>
@@ -1432,7 +1484,7 @@ body.modal-open{ overflow:hidden; }
               </div>
             </div>
 
-            <div style="display:grid; gap:10px; margin-top:6px;">
+            <div style="display:grid; gap:12px; margin-top:8px;">
               <div class="metric">
                 <div>
                   <b>Риск-профиль</b>
@@ -1455,66 +1507,7 @@ body.modal-open{ overflow:hidden; }
     </section>
 
     <!-- Security -->
-    <section id="security">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div>
-            <h2>Безопасность</h2>
-            <p>White Invest не хранит средства и не имеет доступа к выводу. Фокус — безопасное API-подключение и контроль рисков.</p>
-          </div>
-        </div>
-
-        <div class="grid sec-grid">
-          <div class="bullet reveal">
-            <div class="check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <b>Платформа не хранит средства</b>
-              <span>Ваш капитал остаётся на бирже — мы не выступаем кастодианом.</span>
-            </div>
-          </div>
-
-          <div class="bullet reveal">
-            <div class="check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <b>Нет доступа к выводу средств</b>
-              <span>Используйте API-ключи без прав на вывод — только торговые операции.</span>
-            </div>
-          </div>
-
-          <div class="bullet reveal">
-            <div class="check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <b>Зашифрованные API-ключи</b>
-              <span>Ключи защищены шифрованием и ограничениями доступа на уровне приложения.</span>
-            </div>
-          </div>
-
-          <div class="bullet reveal">
-            <div class="check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="rgba(67,255,179,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <b>Встроенные системы управления рисками</b>
-              <span>Лимиты просадки, контроль размера позиции и логика остановки при нестабильности.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- Strategies anchor (simple block, can be expanded) -->
     
@@ -1524,7 +1517,7 @@ body.modal-open{ overflow:hidden; }
       <div class="wrap">
         <div class="cta reveal">
           <div>
-            <h2>Начните инвестировать с алгоритмами уже сегодня</h2>
+            <h2>Начните инвестировать с White Invest уже сегодня</h2>
             <p>Подключите биржу через API и выберите стратегию под свой риск-профиль.</p>
           </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
@@ -1552,7 +1545,7 @@ body.modal-open{ overflow:hidden; }
           <div class="cols">
             <div>© <span id="y"></span> White Invest. All rights reserved.</div>
             <div style="display:flex; gap:14px; flex-wrap:wrap;">
-              <a href="#security">Безопасность</a>
+              
               <a href="#yield">Риски</a>
               <a href="#home">Наверх</a>
             </div>
